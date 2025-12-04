@@ -10,6 +10,8 @@ builder.Services.AddControllers()
 // DB InMemory per semplicità didattica
 builder.Services.AddDbContext<PizzaContext>(opt => opt.UseInMemoryDatabase("dbpizze"));
 
+SQLITE_DB.inizialize("pizze.db");
+
 // Swagger (interfaccia di test)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

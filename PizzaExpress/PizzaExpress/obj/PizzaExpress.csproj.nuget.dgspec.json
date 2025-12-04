@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\xuxiang.yu\\Documents\\PizzaExpressClient+Server\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj": {}
+    "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj": {}
   },
   "projects": {
-    "C:\\Users\\xuxiang.yu\\Documents\\PizzaExpressClient+Server\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj": {
+    "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\xuxiang.yu\\Documents\\PizzaExpressClient+Server\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj",
+        "projectUniqueName": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj",
         "projectName": "PizzaExpress",
-        "projectPath": "C:\\Users\\xuxiang.yu\\Documents\\PizzaExpressClient+Server\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj",
+        "projectPath": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj",
         "packagesPath": "C:\\Users\\xuxiang.yu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\xuxiang.yu\\Documents\\PizzaExpressClient+Server\\PizzaExpress\\PizzaExpress\\obj\\",
+        "outputPath": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaExpress\\PizzaExpress\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[9.0.10, )"
