@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PizzaExpress.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PizzaExpress.Data
 {
@@ -23,6 +24,31 @@ namespace PizzaExpress.Data
                 new Pizza { Id = 3, Nome = "Capricciosa", Prezzo = 7.00m, Categoria = "Speciale" }
             );
             ctx.SaveChanges();
+        }
+    }
+    public class PizzaContex : DbContext
+    {
+        public DbSet<Pizza> Pizze { get; set; }
+        public string dbPath { get; }
+        public PizzaContex()
+        {
+            // Trova i folder
+            string folder = Path.Combine(Directory.GetCurrentDirectory(), "DB");
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+            dbPath = Path.Combine(folder, "pizze.db");
+
+            // In qualche modo crea il database se non esiste
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            // Usa SQLite come database locale
+            options.UseSqlite($"Data Source={dbPath}");
+            // Utilizzare versione del pacchetto Microsoft.EntityFrameworkCore.Sqlite 9.0.11
         }
     }
 }
