@@ -62,6 +62,8 @@ namespace PizzaExpress.Repository
             existing.Prezzo = pizza.Prezzo;
             existing.Categoria = pizza.Categoria;
             existing.Note = pizza.Note;
+            existing.Tavolo = pizza.Tavolo;
+            existing.Stato = pizza.Stato;
 
             _context.SaveChanges();
             return true;

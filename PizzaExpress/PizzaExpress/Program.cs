@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers()
     .AddXmlSerializerFormatters(); // Abilita anche XML (Accept: text/xml)
+
 builder.Services.AddScoped<PizzaRepository>();
 
 
