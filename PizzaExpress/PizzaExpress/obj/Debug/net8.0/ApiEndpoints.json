@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "PizzaExpress.Controllers.PizzeController",
-    "Method": "GetPizze",
+    "Method": "GetAll",
     "RelativePath": "api/Pizze",
     "HttpMethod": "GET",
     "IsController": true,
@@ -11,14 +11,14 @@
   },
   {
     "ContainingType": "PizzaExpress.Controllers.PizzeController",
-    "Method": "AddPizza",
+    "Method": "Add",
     "RelativePath": "api/Pizze",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "p",
+        "Name": "pizza",
         "Type": "PizzaExpress.Models.Pizza",
         "IsRequired": true
       }
@@ -27,7 +27,7 @@
   },
   {
     "ContainingType": "PizzaExpress.Controllers.PizzeController",
-    "Method": "GetPizzaById",
+    "Method": "GetById",
     "RelativePath": "api/Pizze/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -43,23 +43,7 @@
   },
   {
     "ContainingType": "PizzaExpress.Controllers.PizzeController",
-    "Method": "DeletePizza",
-    "RelativePath": "api/Pizze/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PizzaExpress.Controllers.PizzeController",
-    "Method": "UpdatePrezzo",
+    "Method": "Update",
     "RelativePath": "api/Pizze/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -71,8 +55,8 @@
         "IsRequired": true
       },
       {
-        "Name": "body",
-        "Type": "PizzaExpress.Controllers.PizzeController\u002BPrezzoUpdate",
+        "Name": "pizza",
+        "Type": "PizzaExpress.Models.Pizza",
         "IsRequired": true
       }
     ],
@@ -80,21 +64,16 @@
   },
   {
     "ContainingType": "PizzaExpress.Controllers.PizzeController",
-    "Method": "Search",
-    "RelativePath": "api/Pizze/search",
-    "HttpMethod": "GET",
+    "Method": "Delete",
+    "RelativePath": "api/Pizze/{id}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "maxPrezzo",
-        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "categoria",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

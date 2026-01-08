@@ -1,14 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using PizzaExpress.Data;
+using PizzaExpress.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
     .AddXmlSerializerFormatters(); // Abilita anche XML (Accept: text/xml)
+builder.Services.AddScoped<PizzaRepository>();
+
 
 // DB InMemory per semplicità didattica
-builder.Services.AddDbContext<PizzaContext>(opt => opt.UseInMemoryDatabase("dbpizze"));
+builder.Services.AddDbContext<PizzaContext>();
+
 
 // Swagger (interfaccia di test)
 builder.Services.AddEndpointsApiExplorer();
@@ -20,7 +24,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var ctx = scope.ServiceProvider.GetRequiredService<PizzaContext>();
-    SeedData.Initialize(ctx);
 }
 
 // Configure the HTTP request pipeline.
