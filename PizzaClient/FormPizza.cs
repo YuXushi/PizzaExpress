@@ -52,16 +52,8 @@ namespace PizzaClient
                 AutoSize = true
             };
 
-            _btnCosto = new Button
-            {
-                Text = "Costo",
-                Location = new Point(900, 15),
-                Size = new Size(70, 30)
-            };
-            _btnCosto.Click += BtnCosto_Click;
 
             pnlTop.Controls.Add(lblTitolo);
-            pnlTop.Controls.Add(_btnCosto);
 
             // ======================================================
             //  PANNELLO SINISTRO
@@ -189,6 +181,13 @@ namespace PizzaClient
                 Anchor = AnchorStyles.Left,
                 Padding = new Padding(0, 10, 0, 0)
             };
+            _btnCosto = new Button
+            {
+                Text = "Costo",
+                Location = new Point(900, 15),
+                Width = 120
+            };
+            _btnCosto.Click += BtnCosto_Click;
 
             _btnAggiungi = new Button { Text = "Aggiungi", Width = 120 };
             _btnAggiorna = new Button { Text = "Aggiorna", Width = 120 };
@@ -201,6 +200,7 @@ namespace PizzaClient
             pnlButtons.Controls.Add(_btnAggiungi);
             pnlButtons.Controls.Add(_btnAggiorna);
             pnlButtons.Controls.Add(_btnElimina);
+            pnlButtons.Controls.Add(_btnCosto);
 
             pnlRight.Controls.Add(pnlButtons, 1, 6);
 
@@ -329,6 +329,13 @@ namespace PizzaClient
         // ======================================================================
         private async Task EliminaPizza()
         {
+            DialogResult result = MessageBox.Show("Sei sicuro di voler eliminare la pizza?", "Prompt di eliminazione", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
             if (!int.TryParse(_txtId.Text, out int id))
             {
                 MessageBox.Show("Seleziona una pizza da eliminare.");

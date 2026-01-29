@@ -13,7 +13,7 @@ namespace PizzaExpress
         [STAThread]
         static void Main()
         {
-            Console.WriteLine("Avviando server web api in background...");
+            Console.WriteLine("Avviando server web api...");
             var builder = WebApplication.CreateBuilder();
 
             builder.Services.AddDbContext<PizzaDbContext>();
