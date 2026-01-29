@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "As/Ksh4yLZ0=",
+  "dgSpecHash": "a0yl5i632sc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj",
+  "projectFilePath": "C:\\Users\\xuxiang.yu\\Documents\\codice\\PizzaExpress\\PizzaExpress\\PizzaExpress.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\xuxiang.yu\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.8\\microsoft.data.sqlite.core.8.0.8.nupkg.sha512",
     "C:\\Users\\xuxiang.yu\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.8\\microsoft.entityframeworkcore.8.0.8.nupkg.sha512",

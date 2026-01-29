@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj": {}
+    "C:\\Users\\xuxiang.yu\\Documents\\codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj": {
+    "C:\\Users\\xuxiang.yu\\Documents\\codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj",
+        "projectUniqueName": "C:\\Users\\xuxiang.yu\\Documents\\codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj",
         "projectName": "PizzaClient",
-        "projectPath": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj",
+        "projectPath": "C:\\Users\\xuxiang.yu\\Documents\\codice\\PizzaExpress\\PizzaClient\\PizzaClient.csproj",
         "packagesPath": "C:\\Users\\xuxiang.yu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\xuxiang.yu\\Documents\\Codice\\PizzaExpress\\PizzaClient\\obj\\",
+        "outputPath": "C:\\Users\\xuxiang.yu\\Documents\\codice\\PizzaExpress\\PizzaClient\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

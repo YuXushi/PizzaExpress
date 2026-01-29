@@ -6,15 +6,14 @@ using PizzaExpress.Api;
 using System;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace PIZZGRA
+namespace PizzaExpress
 {
     internal static class Program
     {
         [STAThread]
         static void Main()
         {
-            Console.WriteLine("Avviando server web api...");
-
+            Console.WriteLine("Avviando server web api in background...");
             var builder = WebApplication.CreateBuilder();
 
             builder.Services.AddDbContext<PizzaDbContext>();
