@@ -14,7 +14,7 @@ namespace PizzaClient
         private readonly TextBox _txtId, _txtNome, _txtPrezzo, _txtRicerca, _txtNote, _txtStato;
         private readonly ComboBox _cmbCategoria;
 
-        private readonly Button _btnAggiungi, _btnAggiorna, _btnElimina, _btnElenco, _btnCosto;
+        private readonly Button _btnAggiungi, _btnAggiorna, _btnElimina, _btnElenco, _btnCosto, _btnNuovaPizza;
 
         public FormPizza()
         {
@@ -148,8 +148,10 @@ namespace PizzaClient
             _cmbCategoria.Items.AddRange(new[] { "Classica", "Speciale", "Gourmet" });
             pnlRight.Controls.Add(_cmbCategoria, 1, 4);
 
+            pnlRight.Controls.Add(new Label { Text = "Stato:"}, 0, 5);
+
             // NOTE — Campo grande e allineato
-            pnlRight.Controls.Add(new Label { Text = "Note:" }, 0, 5);
+            pnlRight.Controls.Add(new Label { Text = "Note:" }, 0, 6);
 
             _txtNote = new TextBox
             {
@@ -160,7 +162,7 @@ namespace PizzaClient
                 Anchor = AnchorStyles.Left
             };
 
-            pnlRight.Controls.Add(_txtNote, 1, 5);
+            pnlRight.Controls.Add(_txtNote, 1, 6);
 
             // Stato
             _txtStato = new TextBox
@@ -192,23 +194,27 @@ namespace PizzaClient
             _btnAggiungi = new Button { Text = "Aggiungi", Width = 120 };
             _btnAggiorna = new Button { Text = "Aggiorna", Width = 120 };
             _btnElimina = new Button { Text = "Elimina", Width = 120 };
+            _btnNuovaPizza = new Button { Text = "Nuova Pizza", Width = 120 };
 
             _btnAggiungi.Click += async (s, e) => await AggiungiPizza();
             _btnAggiorna.Click += async (s, e) => await AggiornaPizza();
             _btnElimina.Click += async (s, e) => await EliminaPizza();
+            _btnNuovaPizza.Click += async (s, e) => await NuovaPizza();
 
             pnlButtons.Controls.Add(_btnAggiungi);
             pnlButtons.Controls.Add(_btnAggiorna);
             pnlButtons.Controls.Add(_btnElimina);
             pnlButtons.Controls.Add(_btnCosto);
+            pnlButtons.Controls.Add(_btnNuovaPizza);
 
-            pnlRight.Controls.Add(pnlButtons, 1, 6);
+            pnlRight.Controls.Add(pnlButtons, 1, 7);
 
             // ======================================================
             Controls.Add(pnlRight);
             Controls.Add(pnlLeft);
             Controls.Add(pnlTop);
 
+            onFormLoad();
             Load += async (s, e) => await CaricaPizze();
         }
 
@@ -247,6 +253,7 @@ namespace PizzaClient
 
         private void LstPizze_SelectedIndexChanged(object? sender, EventArgs e)
         {
+            abilitaFunzioni();
             if (_lstPizze.SelectedIndex < 0)
                 return;
 
@@ -257,6 +264,7 @@ namespace PizzaClient
             _txtPrezzo.Text = p.Prezzo.ToString();
             _cmbCategoria.Text = p.Categoria;
             _txtNote.Text = p.Note;
+            _txtStato.Text = p.Stato;
         }
 
         // ======================================================================
@@ -273,8 +281,8 @@ namespace PizzaClient
                 Nome = _txtNome.Text,
                 Prezzo = prezzo,
                 Categoria = _cmbCategoria.Text,
-                Note = _txtNote.Text,
-                Stato = _txtStato.Text
+                Stato = _txtStato.Text,
+                Note = _txtNote.Text
             };
 
             var resp = await _httpClient.PostAsJsonAsync("api/pizze", pizza);
@@ -287,6 +295,15 @@ namespace PizzaClient
             }
 
             await CaricaPizze();
+        }
+
+        private async Task NuovaPizza()
+        {
+            _txtNome.Text = "Nome della Nuova Pizza";
+            _txtPrezzo.Text = "4,0";
+            _cmbCategoria.Text = "Classica";
+            _txtNote.Text = "Note sulla nuova pizza";
+            _txtStato.Text = "Preparando l'impasto...";
         }
 
         // ======================================================================
@@ -351,6 +368,7 @@ namespace PizzaClient
             _txtNome.Clear();
             _txtPrezzo.Clear();
             _txtNote.Clear();
+            _txtStato.Clear();
             _cmbCategoria.SelectedIndex = -1;
         }
 
@@ -372,6 +390,23 @@ namespace PizzaClient
                 string prezzo = parts[2].Replace("€", "").Trim();
                 MessageBox.Show($"La pizza {nome} costa {prezzo}€.");
             }
+        }
+
+        // =======================================================================
+        private void onFormLoad()
+        {
+            _btnAggiorna.Enabled = false;
+            _btnCosto.Enabled = false;
+            _btnElenco.Enabled = false;
+            _btnElimina.Enabled = false;
+        }
+
+        private void abilitaFunzioni()
+        {
+            _btnAggiorna.Enabled = true;
+            _btnCosto.Enabled = true;
+            _btnElenco.Enabled = true;
+            _btnElimina.Enabled = true;
         }
     }
 }
