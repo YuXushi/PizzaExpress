@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "PizzaExpress.API.PizzeController",
+    "ContainingType": "PizzaExpress.Controllers.PizzeController",
     "Method": "GetAll",
     "RelativePath": "api/Pizze",
     "HttpMethod": "GET",
@@ -10,7 +10,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PizzaExpress.API.PizzeController",
+    "ContainingType": "PizzaExpress.Controllers.PizzeController",
     "Method": "Add",
     "RelativePath": "api/Pizze",
     "HttpMethod": "POST",
@@ -26,7 +26,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PizzaExpress.API.PizzeController",
+    "ContainingType": "PizzaExpress.Controllers.PizzeController",
     "Method": "GetById",
     "RelativePath": "api/Pizze/{id}",
     "HttpMethod": "GET",
@@ -42,7 +42,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PizzaExpress.API.PizzeController",
+    "ContainingType": "PizzaExpress.Controllers.PizzeController",
     "Method": "Update",
     "RelativePath": "api/Pizze/{id}",
     "HttpMethod": "PUT",
@@ -63,7 +63,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PizzaExpress.API.PizzeController",
+    "ContainingType": "PizzaExpress.Controllers.PizzeController",
     "Method": "Delete",
     "RelativePath": "api/Pizze/{id}",
     "HttpMethod": "DELETE",
