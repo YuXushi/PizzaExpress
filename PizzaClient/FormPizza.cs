@@ -6,15 +6,15 @@ namespace PizzaClient
 {
     public partial class FormPizza : Form
     {
+        //
+        // Componenti del form
+        //
         private readonly HttpClient _httpClient;
-
         private List<Pizza> _tutteLePizze = new();
-
         private readonly ListBox _lstPizze;
         private readonly TextBox _txtId, _txtNome, _txtPrezzo, _txtRicerca, _txtNote, _txtStato;
         private readonly ComboBox _cmbCategoria;
-
-        private readonly Button _btnAggiungi, _btnAggiorna, _btnElimina, _btnElenco, _btnCosto, _btnNuovaPizza;
+        private readonly Button _btnAggiungi, _btnAggiorna, _btnElimina, _btnElenco, _btnNuovaPizza;
 
         public FormPizza()
         {
@@ -22,9 +22,7 @@ namespace PizzaClient
             
             Text = "Gestione Pizze (Database SQLite)";
 
-            // =============================
-            // DIMENSIONE FISSA DELLA FINESTRA
-            // =============================
+            // Imposta la dimensione fissa della finestra
             Size = new Size(1000, 600);
             MinimumSize = new Size(1000, 600);
             MaximumSize = new Size(1000, 600);
@@ -51,7 +49,6 @@ namespace PizzaClient
                 Location = new Point(10, 15),
                 AutoSize = true
             };
-
 
             pnlTop.Controls.Add(lblTitolo);
 
@@ -93,7 +90,7 @@ namespace PizzaClient
             pnlLeft.Controls.Add(_txtRicerca);
 
             // ======================================================
-            //  PANNELLO DESTRO — ALLINEAMENTO PERFETTO A SINISTRA
+            //  PANNELLO DESTRO 
             // ======================================================
             var pnlRight = new TableLayoutPanel
             {
@@ -116,55 +113,25 @@ namespace PizzaClient
 
             // ID
             _txtId = new TextBox { Visible = false };
-            pnlRight.Controls.Add(new Label { Text = "Id:", Visible = false }, 0, 1);
-            pnlRight.Controls.Add(_txtId, 1, 1);
 
             // Nome
             pnlRight.Controls.Add(new Label { Text = "Nome:" }, 0, 2);
-            _txtNome = new TextBox
-            {
-                Width = 300,
-                Anchor = AnchorStyles.Left
-            };
+            _txtNome = new TextBox();
             pnlRight.Controls.Add(_txtNome, 1, 2);
 
             // Prezzo
             pnlRight.Controls.Add(new Label { Text = "Prezzo:" }, 0, 3);
-            _txtPrezzo = new TextBox
-            {
-                Width = 150,
-                Anchor = AnchorStyles.Left
-            };
+            _txtPrezzo = new TextBox();
             pnlRight.Controls.Add(_txtPrezzo, 1, 3);
 
             // Categoria
             pnlRight.Controls.Add(new Label { Text = "Categoria:" }, 0, 4);
-            _cmbCategoria = new ComboBox
-            {
-                Width = 200,
-                DropDownStyle = ComboBoxStyle.DropDown,
-                Anchor = AnchorStyles.Left
-            };
+            _cmbCategoria = new ComboBox { DropDownStyle = ComboBoxStyle.DropDown };
             _cmbCategoria.Items.AddRange(new[] { "Classica", "Speciale", "Gourmet" });
             pnlRight.Controls.Add(_cmbCategoria, 1, 4);
 
-            pnlRight.Controls.Add(new Label { Text = "Stato:"}, 0, 5);
-
-            // NOTE — Campo grande e allineato
-            pnlRight.Controls.Add(new Label { Text = "Note:" }, 0, 6);
-
-            _txtNote = new TextBox
-            {
-                Multiline = true,
-                Height = 230,
-                Width = 500,
-                ScrollBars = ScrollBars.Vertical,
-                Anchor = AnchorStyles.Left
-            };
-
-            pnlRight.Controls.Add(_txtNote, 1, 6);
-
             // Stato
+            pnlRight.Controls.Add(new Label { Text = "Stato:"}, 0, 5);
             _txtStato = new TextBox
             {
                 Height = 200,
@@ -173,52 +140,143 @@ namespace PizzaClient
             };
             pnlRight.Controls.Add(_txtStato, 1, 5);
 
-            // ======================================================
-            //  PANNELLO PULSANTI — ALLINEATO COL CAMPO NOME (SX)
-            // ======================================================
-            var pnlButtons = new FlowLayoutPanel
+            // Note
+            pnlRight.Controls.Add(new Label { Text = "Note:" }, 0, 6);
+            _txtNote = new TextBox
             {
-                FlowDirection = FlowDirection.LeftToRight,
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Padding = new Padding(0, 10, 0, 0)
+                Multiline = true,
+                Height = 120,
+                Width = 360,
+                ScrollBars = ScrollBars.Vertical,
+                Anchor = AnchorStyles.Left
             };
-            _btnCosto = new Button
-            {
-                Text = "Costo",
-                Location = new Point(900, 15),
-                Width = 120
-            };
-            _btnCosto.Click += BtnCosto_Click;
+            pnlRight.Controls.Add(_txtNote, 1, 6);
+
+
+            // ======================================================
+            //  PANNELLO PULSANTI
+            // ======================================================
+            var pnlButtons = new FlowLayoutPanel { AutoSize = true };
+
+            _btnNuovaPizza = new Button { Text = "Nuova Pizza", Width = 120 };
+            _btnNuovaPizza.Click += (s, e) => ModalitaInserimento();
+
 
             _btnAggiungi = new Button { Text = "Aggiungi", Width = 120 };
             _btnAggiorna = new Button { Text = "Aggiorna", Width = 120 };
             _btnElimina = new Button { Text = "Elimina", Width = 120 };
-            _btnNuovaPizza = new Button { Text = "Nuova Pizza", Width = 120 };
 
             _btnAggiungi.Click += async (s, e) => await AggiungiPizza();
             _btnAggiorna.Click += async (s, e) => await AggiornaPizza();
             _btnElimina.Click += async (s, e) => await EliminaPizza();
-            _btnNuovaPizza.Click += async (s, e) => await NuovaPizza();
 
-            pnlButtons.Controls.Add(_btnAggiungi);
-            pnlButtons.Controls.Add(_btnAggiorna);
-            pnlButtons.Controls.Add(_btnElimina);
-            pnlButtons.Controls.Add(_btnCosto);
-            pnlButtons.Controls.Add(_btnNuovaPizza);
+            pnlButtons.Controls.AddRange(new Control[]
+            {
+                _btnNuovaPizza, _btnAggiungi, _btnAggiorna, _btnElimina 
+            });
 
             pnlRight.Controls.Add(pnlButtons, 1, 7);
 
-            // ======================================================
             Controls.Add(pnlRight);
             Controls.Add(pnlLeft);
             Controls.Add(pnlTop);
 
-            onFormLoad();
-            Load += async (s, e) => await CaricaPizze();
+            // ================================================
+            // Verifica dei campi
+
+            _txtNome.TextChanged += (s, e) => VerificaCampiInserimento();
+            _txtPrezzo.TextChanged += (s, e) => VerificaCampiInserimento();
+            _cmbCategoria.SelectedIndexChanged += (s, e) => VerificaCampiInserimento();
+
+            // ======================================================
+            Load += async (s, e) => 
+            {
+                await CaricaPizze();
+                StatoIniziale();
+            };
         }
 
         // ======================================================================
+        //   __  __ ______ _______ ____  _____ _____ 
+        //  |  \/  |  ____|__   __/ __ \|  __ \_   _|
+        //  | \  / | |__     | | | |  | | |  | || |  
+        //  | |\/| |  __|    | | | |  | | |  | || |  
+        //  | |  | | |____   | | | |__| | |__| || |_ 
+        //  |_|  |_|______|  |_|  \____/|_____/_____|
+        // ======================================================================                                                                      
+
+        // Stato iniziale
+        private void StatoIniziale()
+        {
+            AbilitaCampi(false);
+            _btnAggiungi.Enabled = false;
+            _btnAggiorna.Enabled = false;
+            _btnElimina.Enabled = false;
+        }
+
+        // Modalità inserimento nuova pizza
+        private void ModalitaInserimento()
+        {
+            _lstPizze.ClearSelected();
+            PulisciCampi();
+            AbilitaCampi(true);
+
+            _btnAggiungi.Enabled = false;
+            _btnAggiorna.Enabled = false;
+            _btnElimina.Enabled = false;
+        }
+
+        // Modalità modifica pizza esistente
+        private void ModalitaModifica()
+        {
+            AbilitaCampi(true);
+            _btnAggiungi.Enabled = false;
+            _btnAggiorna.Enabled = true;
+            _btnElimina.Enabled = true;
+        }
+
+        private void AbilitaCampi(bool abilita)
+        {
+            _txtNome.Enabled = abilita;
+            _txtPrezzo.Enabled = abilita;
+            _cmbCategoria.Enabled = abilita;
+            _txtNote.Enabled = abilita;
+            _txtStato.Enabled = abilita;
+        }
+
+        private void PulisciCampi()
+        {
+            _txtId.Clear();
+            _txtNome.Clear();
+            _txtPrezzo.Clear();
+            _txtNote.Clear();
+            _cmbCategoria.SelectedIndex = -1;
+        }
+
+        // Verifica che i campi obbligatori siano compilati
+        private void VerificaCampiInserimento()
+        {
+            bool nomeOk = !string.IsNullOrWhiteSpace(_txtNome.Text);
+            bool prezzoOk = decimal.TryParse(_txtPrezzo.Text, out _);
+            bool categoriaOk = !string.IsNullOrWhiteSpace(_cmbCategoria.Text);
+
+            _btnAggiungi.Enabled = nomeOk && prezzoOk && categoriaOk;
+        }
+        private void LstPizze_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (_lstPizze.SelectedIndex < 0) return;
+
+            var p = _tutteLePizze[_lstPizze.SelectedIndex];
+
+            _txtId.Text = p.Id.ToString();
+            _txtNome.Text = p.Nome;
+            _txtPrezzo.Text = p.Prezzo.ToString();
+            _cmbCategoria.Text = p.Categoria;
+            _txtNote.Text = p.Note;
+
+            ModalitaModifica();
+        }
+
         private async Task CaricaPizze()
         {
             try
@@ -251,22 +309,6 @@ namespace PizzaClient
             }
         }
 
-        private void LstPizze_SelectedIndexChanged(object? sender, EventArgs e)
-        {
-            abilitaFunzioni();
-            if (_lstPizze.SelectedIndex < 0)
-                return;
-
-            var p = _tutteLePizze[_lstPizze.SelectedIndex];
-
-            _txtId.Text = p.Id.ToString();
-            _txtNome.Text = p.Nome;
-            _txtPrezzo.Text = p.Prezzo.ToString();
-            _cmbCategoria.Text = p.Categoria;
-            _txtNote.Text = p.Note;
-            _txtStato.Text = p.Stato;
-        }
-
         // ======================================================================
         private async Task AggiungiPizza()
         {
@@ -295,15 +337,6 @@ namespace PizzaClient
             }
 
             await CaricaPizze();
-        }
-
-        private async Task NuovaPizza()
-        {
-            _txtNome.Text = "Nome della Nuova Pizza";
-            _txtPrezzo.Text = "4,0";
-            _cmbCategoria.Text = "Classica";
-            _txtNote.Text = "Note sulla nuova pizza";
-            _txtStato.Text = "Preparando l'impasto...";
         }
 
         // ======================================================================
@@ -396,17 +429,8 @@ namespace PizzaClient
         private void onFormLoad()
         {
             _btnAggiorna.Enabled = false;
-            _btnCosto.Enabled = false;
             _btnElenco.Enabled = false;
             _btnElimina.Enabled = false;
-        }
-
-        private void abilitaFunzioni()
-        {
-            _btnAggiorna.Enabled = true;
-            _btnCosto.Enabled = true;
-            _btnElenco.Enabled = true;
-            _btnElimina.Enabled = true;
         }
     }
 }

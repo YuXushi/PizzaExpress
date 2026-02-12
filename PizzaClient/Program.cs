@@ -24,7 +24,8 @@ namespace PizzaClient
             client.Timeout = TimeSpan.FromSeconds(2);
 
             bool serverOnline = false;
-
+            
+            // attende il server
             while (!serverOnline)
             {
                 try
