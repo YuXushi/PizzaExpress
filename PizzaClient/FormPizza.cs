@@ -15,6 +15,7 @@ namespace PizzaClient
         private readonly TextBox _txtId, _txtNome, _txtPrezzo, _txtRicerca, _txtNote, _txtStato;
         private readonly ComboBox _cmbCategoria;
         private readonly Button _btnAggiungi, _btnAggiorna, _btnElimina, _btnElenco, _btnNuovaPizza;
+        private readonly Button _btnIngredienti;
 
         public FormPizza()
         {
@@ -159,23 +160,26 @@ namespace PizzaClient
             var pnlButtons = new FlowLayoutPanel { AutoSize = true };
 
             _btnNuovaPizza = new Button { Text = "Nuova Pizza", Width = 120 };
-            _btnNuovaPizza.Click += (s, e) => ModalitaInserimento();
-
-
             _btnAggiungi = new Button { Text = "Aggiungi", Width = 120 };
             _btnAggiorna = new Button { Text = "Aggiorna", Width = 120 };
             _btnElimina = new Button { Text = "Elimina", Width = 120 };
+            _btnIngredienti = new Button { Text = "Ottieni Ingredienti", Width = 120 };
 
             _btnAggiungi.Click += async (s, e) => await AggiungiPizza();
             _btnAggiorna.Click += async (s, e) => await AggiornaPizza();
             _btnElimina.Click += async (s, e) => await EliminaPizza();
+            _btnNuovaPizza.Click += (s, e) => ModalitaInserimento();
+            _btnIngredienti.Click += (s, e) => OttieniIngredienti();
 
             pnlButtons.Controls.AddRange(new Control[]
             {
-                _btnNuovaPizza, _btnAggiungi, _btnAggiorna, _btnElimina 
+                _btnNuovaPizza, _btnAggiungi, _btnAggiorna, _btnElimina, _btnIngredienti
             });
 
             pnlRight.Controls.Add(pnlButtons, 1, 7);
+
+            // ===============================================
+            // Aggiunge i pannelli
 
             Controls.Add(pnlRight);
             Controls.Add(pnlLeft);
@@ -406,22 +410,20 @@ namespace PizzaClient
         }
 
         // ======================================================================
-        private void BtnCosto_Click(object? sender, EventArgs e)
+        private async void OttieniIngredienti()
         {
-            if (_lstPizze.SelectedItem == null)
+            var _apiClient = new HttpClient();
+
+            try
             {
-                MessageBox.Show("Seleziona una pizza.");
-                return;
+                var request = new HttpRequestMessage(HttpMethod.Get, "https://www.themealdb.com/api/json/v1/1/lookup.php?i=53014");
+                var response = await _apiClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                MessageBox.Show(await response.Content.ReadAsStringAsync());
             }
-
-            var s = _lstPizze.SelectedItem.ToString();
-            var parts = s.Split('-');
-
-            if (parts.Length >= 3)
+            catch
             {
-                string nome = parts[1].Trim();
-                string prezzo = parts[2].Replace("€", "").Trim();
-                MessageBox.Show($"La pizza {nome} costa {prezzo}€.");
+                MessageBox.Show("Errore nella connessione all'endpoint.");
             }
         }
 
