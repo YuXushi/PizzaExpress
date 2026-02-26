@@ -21,7 +21,7 @@ namespace PizzaExpress.Models
                 $"?query=pizza {nomePizza}" +
                 $"&language=it" +
                 $"&number=1" +
-                $"&apikey={_apiKey}";
+                $"&apiKey={_apiKey}";
 
             var searchResponse =
                await _httpClient.GetFromJsonAsync<SearchResponse>(searchURL);

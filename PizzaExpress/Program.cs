@@ -47,7 +47,8 @@ app.MapGet("/", () =>
         $"http://127.0.0.1:5000\n" +
         $"http://{ipRete}:5000\n\n" +
         "API:\n" +
-        $"http://{ipRete}:5000/api/pizze\n",
+        $"http://{ipRete}:5000/api/pizze\n" +
+        $"http://{ipRete}:5000/api/ingredienti/da-pizza?nome=Margherita\n",
         "text/plain"
     );
 });
