@@ -169,7 +169,7 @@ namespace PizzaClient
             _btnAggiorna.Click += async (s, e) => await AggiornaPizza();
             _btnElimina.Click += async (s, e) => await EliminaPizza();
             _btnNuovaPizza.Click += (s, e) => ModalitaInserimento();
-            _btnIngredienti.Click += (s, e) => OttieniIngredienti();
+            _btnIngredienti.Click += OttieniIngredienti;
 
             pnlButtons.Controls.AddRange(new Control[]
             {
@@ -216,6 +216,7 @@ namespace PizzaClient
             _btnAggiungi.Enabled = false;
             _btnAggiorna.Enabled = false;
             _btnElimina.Enabled = false;
+            _btnIngredienti.Enabled = false;
         }
 
         // Modalità inserimento nuova pizza
@@ -237,6 +238,7 @@ namespace PizzaClient
             _btnAggiungi.Enabled = false;
             _btnAggiorna.Enabled = true;
             _btnElimina.Enabled = true;
+            _btnIngredienti.Enabled = true;
         }
 
         private void AbilitaCampi(bool abilita)
@@ -410,29 +412,33 @@ namespace PizzaClient
         }
 
         // ======================================================================
-        private async void OttieniIngredienti()
+        private async void OttieniIngredienti(object? sender, EventArgs e)
         {
-            var _apiClient = new HttpClient();
-
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, "https://www.themealdb.com/api/json/v1/1/lookup.php?i=53014");
-                var response = await _apiClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                MessageBox.Show(await response.Content.ReadAsStringAsync());
-            }
-            catch
-            {
-                MessageBox.Show("Errore nella connessione all'endpoint.");
-            }
-        }
+                if (_lstPizze.SelectedIndex < 0)
+                {
+                    MessageBox.Show("Selezionare una pizza");
+                    return;
+                }
 
-        // =======================================================================
-        private void onFormLoad()
-        {
-            _btnAggiorna.Enabled = false;
-            _btnElenco.Enabled = false;
-            _btnElimina.Enabled = false;
+                var pizza = _tutteLePizze[_lstPizze.SelectedIndex];
+
+                var dati = await _httpClient.GetFromJsonAsync<RispostaIngredienti>($"api/ingredienti/da-pizza?nome={pizza.Nome}");
+                if (dati == null || dati.ingredienti.Count == 0)
+                {
+                    MessageBox.Show("Nessun ingrediente trovato.");
+                    return;
+                }
+
+                MessageBox.Show($"Ingredienti {dati.pizza}:\n" +
+                    string.Join("\n-", dati.ingredienti),
+                    "ingredienti");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Errore nella chiamata API: " + ex.Message);
+            }
         }
     }
 }
