@@ -3,6 +3,7 @@ using PizzaExpress.Repository;
 using System.Net.Sockets;
 using System.Net;
 using System.Diagnostics;
+using PizzaExpress.Models;
 
 // Ottiene IP dell'host nella LAN
 string ipRete = "NON DISPONIBILE";
@@ -32,6 +33,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PizzaContext>();
 builder.Services.AddScoped<PizzaRepository>();
 builder.Services.AddControllers();
+builder.Services.AddHttpClient<SpoonacularAPI>();
 
 var app = builder.Build();
 
